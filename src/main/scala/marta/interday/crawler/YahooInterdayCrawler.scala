@@ -6,6 +6,9 @@ import scala.math.BigDecimal.RoundingMode
 import java.math.MathContext
 import java.net.URL
 
+/**
+ * Yahoo! Finance implementation of the InterdayCrawler.
+ */
 class YahooInterdayCrawler (
         symbol: String,
         startDate: DateTime = new DateTime(0),

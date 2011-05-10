@@ -4,6 +4,9 @@ import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 import scala.math.BigDecimal
 
+/**
+ * Representation of open, high, low, close, volume (OHLCV) data for one trading day.
+ */
 class Bar(
         private val symbol: String,
         private val date: DateTime,
@@ -26,7 +29,11 @@ class Bar(
 object Bar {
     private val DELIMITER = ","
     val csvHeader = new StringBuilder() :+ "symbol" :+ "date" :+ "open" :+ "high" :+ "low" :+ "close" :+ "volume" mkString DELIMITER
-        
+
+    /**
+     * Creates a Bar from a comma separated string.  Ordering of line contents must be symbol,
+     * date, open, high, low, close, volume.
+     */
     def apply(line: String): Bar = {
         val lineArray = line.split(DELIMITER)
         new Bar(lineArray(0), 

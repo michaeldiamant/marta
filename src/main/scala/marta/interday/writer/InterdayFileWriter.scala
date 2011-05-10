@@ -6,6 +6,10 @@ import java.io.File
 import java.util.ArrayList
 import marta.interday.model.Bar
 
+/**
+ * Writer that outputs Bars to a file on disk.  If the file does not exist, it is created.  If
+ * the file exists, then it is overwritten.
+ */
 class InterdayFileWriter(
         val filename: String
     ) extends AbstractInterdayWriter {

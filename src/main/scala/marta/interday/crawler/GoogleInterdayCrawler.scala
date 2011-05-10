@@ -5,6 +5,9 @@ import org.joda.time.format.DateTimeFormat
 import org.joda.time.format.DateTimeFormatter
 import java.net.URL
 
+/**
+ * Google Finance implementation of the InterdayCrawler.
+ */
 class GoogleInterdayCrawler(
         symbol: String,
         startDate: DateTime = new DateTime(0),

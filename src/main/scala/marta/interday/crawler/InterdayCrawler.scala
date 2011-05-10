@@ -7,6 +7,9 @@ import java.net.URL
 import scala.io.Source
 import scala.collection.mutable.StringBuilder
 
+/**
+ * Parses interday OHLCV market data from publicly available market data websites.
+ */
 abstract class InterdayCrawler(
         private val symbol: String,
         private val startDate: DateTime,
@@ -34,7 +37,12 @@ abstract class InterdayCrawler(
     }
     
     private val crawlerLineTransforms = lineTransforms ::: List(prependSymbol, formatDate)
-        
+    
+    /**
+     * Crawls a market data provider's interday data.
+     * 
+     * @returns list of bars representing the crawled OHLCV data 
+     */
     final def crawl(): List[Bar] = {
         val originalLines = Source.fromURL(buildUrl).getLines().drop(1).toList
         
@@ -53,7 +61,20 @@ abstract class InterdayCrawler(
         sortedLines.map(Bar(_))
     }
     
+    /**
+     * Gets the date format pattern that matches the format of crawled dates.  See 
+     * {@link http://joda-time.sourceforge.net/apidocs/org/joda/time/format/DateTimeFormat.html} 
+     * for expected pattern syntax.
+     * 
+     * @return date format pattern
+     */
     def getDateFormatPattern(): String
     
+    /**
+     * Builds URL used to crawl market data.  The URL should include the symbol and the start and end
+     * dates as expected by the market data provider.
+     * 
+     * @return url to retrieve market data from
+     */
     def buildUrl(): URL
 }

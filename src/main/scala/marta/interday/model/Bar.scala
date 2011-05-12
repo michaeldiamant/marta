@@ -8,13 +8,13 @@ import scala.math.BigDecimal
  * Representation of open, high, low, close, volume (OHLCV) data for one trading day.
  */
 class Bar(
-        private val symbol: String,
-        private val date: DateTime,
-        private val open: BigDecimal,
-        private val high: BigDecimal,
-        private val low: BigDecimal,
-        private val close: BigDecimal,
-        private val volume: Long
+        val symbol: String,
+        val date: DateTime,
+        val open: BigDecimal,
+        val high: BigDecimal,
+        val low: BigDecimal,
+        val close: BigDecimal,
+        val volume: Long
     ) {
     
     require(!symbol.isEmpty)

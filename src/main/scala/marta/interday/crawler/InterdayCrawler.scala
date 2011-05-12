@@ -18,6 +18,7 @@ abstract class InterdayCrawler(
     ) {
     
     require(!symbol.isEmpty) 
+    require(startDate.isBefore(endDate))
    
     protected val delimiter = ","
     private val dateIndex = 1
@@ -44,7 +45,8 @@ abstract class InterdayCrawler(
      * @returns list of bars representing the crawled OHLCV data 
      */
     final def crawl(): List[Bar] = {
-        val originalLines = Source.fromURL(buildUrl).getLines().drop(1).toList
+        val linesToDrop = providesHeader match { case true => 1; case _ => 0 }
+        val originalLines = Source.fromURL(buildUrl).getLines().drop(linesToDrop).toList
         
         val processedLines:List[String] = originalLines.map(line => { 
             var processedLine:String = line
@@ -60,6 +62,14 @@ abstract class InterdayCrawler(
         
         sortedLines.map(Bar(_))
     }
+    
+    /**
+     * Defines if the market data provider prefixes its data with a header.  By default, it is assumed
+     * that a header is present.
+     * 
+     * @return true if the market data provider prepends a header to its data, false otherwise
+     */
+    def providesHeader(): Boolean = true
     
     /**
      * Gets the date format pattern that matches the format of crawled dates.  See 

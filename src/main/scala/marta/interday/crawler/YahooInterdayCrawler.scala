@@ -27,6 +27,13 @@ class YahooInterdayCrawler (
 }
 
 object YahooInterdayCrawler {
+    
+    /**
+     * Uses adjusted close price provided by Yahoo! Finance to adjust OHLC for dividends and splits.
+     * 
+     * @param line CSV line containing date, open, high, low, close, volume, and adjusted close
+     * @return CSV line containing date, adjusted open, high, low, close, and volume
+     */
     def adjustOhlcPrices(line:String):String = {
         val delimiter = ","
         val openIndex = 1
@@ -44,7 +51,9 @@ object YahooInterdayCrawler {
             lineArray.update(index, (ohlc(index - 1) / adjustFactor).setScale(2, RoundingMode.UP).toString)    
         }
             
-        lineArray mkString delimiter
+        def stripAdjustedClose(arr: Array[String]) = arr.elements.take(arr.size - 1)
+        
+        stripAdjustedClose(lineArray) mkString delimiter
     }
 }
 

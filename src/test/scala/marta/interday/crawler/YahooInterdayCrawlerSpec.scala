@@ -48,4 +48,13 @@ class YahooInterdayCrawlerSpec extends FlatSpec {
         
         assertThat(actualPrices, is(expectedPrices))
     }
+    
+    it should "adjust OHLC prices using the adjusted closing price" in {
+        val sampleLine = "2011-05-12,11.55,11.80,11.49,11.70,8000000,7.90"
+
+        val expectedOutput = "2011-05-12,7.80,7.97,7.76,7.90,8000000"
+        val actualOutput = YahooInterdayCrawler.adjustOhlcPrices(sampleLine)
+        
+        assertThat(actualOutput, is(expectedOutput))
+    }
 }

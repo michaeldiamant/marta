@@ -22,9 +22,9 @@ class YahooInterdayCrawlerSpec extends FlatSpec {
     behavior of "A YahooInterdayCrawler"
     
     it should "define " + yahooDateFormatPattern + " date format pattern" in {
-        val returnedDateFormatPattern = new YahooInterdayCrawler(symbol).getDateFormatPattern
+        val actualDateFormatPattern = new YahooInterdayCrawler(symbol).getDateFormatPattern
         
-        assertThat(returnedDateFormatPattern, is(yahooDateFormatPattern))
+        assertThat(actualDateFormatPattern, is(yahooDateFormatPattern))
     }
     
     it should "build URL using the symbol, start date, and end date" in {

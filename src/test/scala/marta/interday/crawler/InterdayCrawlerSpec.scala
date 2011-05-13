@@ -17,14 +17,16 @@ class InterdayCrawlerSpec extends FlatSpec {
     private val symbol = "ZVZZT"
     private val endDate = new DateTime()
     private val startDate = new DateTime(endDate.minusHours(1))
+    private val dateFormatPattern = "yyyy-MM-dd"
+    private val url = "test_url"
     
     behavior of "An InterdayCrawler"
     
     it should "require a non-empty symbol" in {
         intercept[IllegalArgumentException] {
             new InterdayCrawler("", startDate, endDate) {
-                def getDateFormatPattern() = ""
-                def buildUrl() = new URL("")
+                def getDateFormatPattern() = dateFormatPattern
+                def buildUrl() = new URL(url)
             }
         }
     }
@@ -35,12 +37,20 @@ class InterdayCrawlerSpec extends FlatSpec {
         
         intercept[IllegalArgumentException] {
             new InterdayCrawler(symbol, after, before) {
-                def getDateFormatPattern() = ""
-                def buildUrl() = new URL("")
+                def getDateFormatPattern() = dateFormatPattern
+                def buildUrl() = new URL(url)
             }
         }      
     }
     
+    it should "require a non-empty date format pattern" in {
+        intercept[IllegalArgumentException] {
+            new InterdayCrawler(symbol, startDate, endDate) {
+                def getDateFormatPattern() = ""
+                def buildUrl() = new URL(url)
+            }
+        }        
+    }
     
     it should "drop the first line of data if it is a header" in {
         val dataFile = new File("src/test/resources/sample_data.csv")

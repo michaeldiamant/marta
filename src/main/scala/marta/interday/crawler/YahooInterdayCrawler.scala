@@ -13,7 +13,7 @@ class YahooInterdayCrawler (
         symbol: String,
         startDate: DateTime = new DateTime(0),
         endDate: DateTime = new DateTime()
-    ) extends InterdayCrawler(symbol, startDate, endDate, List(new AdjustOhlcPrices)) {
+    ) extends InterdayCrawler(symbol, startDate, endDate, List(YahooInterdayCrawler.adjustOhlcPrices)) {
 
     def buildUrl(): URL = 
         // Yahoo! Finance months are zero-indexed.
@@ -26,13 +26,13 @@ class YahooInterdayCrawler (
         "yyyy-MM-dd"
 }
 
-private class AdjustOhlcPrices extends Function[String, String] {
-    private val delimiter = ","
-    private val openIndex = 1
-    private val closeIndex = 4
-    private val adjustedCloseIndex = 6
+object YahooInterdayCrawler {
+    def adjustOhlcPrices(line:String):String = {
+        val delimiter = ","
+        val openIndex = 1
+        val closeIndex = 4
+        val adjustedCloseIndex = 6
     
-    def apply(line: String):String = {
         def createBigDecimal(s: String) = BigDecimal(s, MathContext.DECIMAL128)
         
         val lineArray = line.split(delimiter)

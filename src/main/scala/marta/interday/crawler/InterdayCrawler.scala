@@ -11,14 +11,15 @@ import scala.collection.mutable.StringBuilder
  * Parses interday OHLCV market data from publicly available market data websites.
  */
 abstract class InterdayCrawler(
-        private val symbol: String,
-        private val startDate: DateTime,
-        private val endDate: DateTime,
-        private val lineTransforms: List[String => String] = List()
+        val symbol: String,
+        val startDate: DateTime,
+        val endDate: DateTime,
+        val lineTransforms: List[String => String] = List()
     ) {
     
     require(!symbol.isEmpty) 
     require(startDate.isBefore(endDate))
+    require(!getDateFormatPattern.isEmpty)
    
     protected val delimiter = ","
     private val dateIndex = 1

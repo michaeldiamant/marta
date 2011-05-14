@@ -24,18 +24,26 @@ class InterdayFileWriterSpec extends FlatSpec {
     }
     
     it should "produce a file with one row for each Bar" in {
-        def loadLines(file: File) = Source.fromFile(file).getLines.drop(1).toList
-        def prependSymbol(lines: List[String]) = lines.map("ZVZZT," + _)
-        def createBars(lines: List[String]) = lines.map(Bar(_))
+        def createBarsFromFile(file: File, f: Option[String => String] = None): List[Bar] = {
+            def createBars(lines: List[String]) = lines.map(Bar(_))
+            
+            val lines = Source.fromFile(file).getLines.drop(1).toList
+            f match {
+                case Some(lineTransform) => createBars(lines.map(lineTransform(_)))
+                case _ => createBars(lines)
+            }
+        }
         
         val originalFile = new File("src/test/resources/sample_data.csv")
         val fileToWrite = new File(FileUtils.getTempDirectoryPath + "/test_file.csv")
-        val originalBars = createBars(prependSymbol(loadLines(originalFile)))
+        
+        val prependSymbol = Some((line: String) => "ZVZZT," + line)
+        val originalBars = createBarsFromFile(originalFile, prependSymbol)
             
         val writer = new InterdayFileWriter(fileToWrite.getAbsolutePath)
         writer.write(originalBars)
 
-        val writtenBars = createBars(loadLines(fileToWrite))
+        val writtenBars = createBarsFromFile(fileToWrite)
         FileUtils.deleteQuietly(fileToWrite)
         
         assertThat(writtenBars.size, is(originalBars.size))

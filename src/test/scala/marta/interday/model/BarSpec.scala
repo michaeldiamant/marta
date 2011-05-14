@@ -5,10 +5,7 @@ import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 
 import org.joda.time.DateTime
-import java.net.URL
-import java.io.File
 import scala.math.BigDecimal
-import scala.io.Source
 
 import org.junit.Assert.assertThat
 import org.hamcrest.Matchers.is

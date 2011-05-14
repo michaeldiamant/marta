@@ -12,7 +12,7 @@ import marta.interday.model.Bar
  */
 class InterdayFileWriter(
         val filename: String
-    ) extends AbstractInterdayWriter {
+    ) extends InterdayWriter {
 
     def write(bars: List[Bar]) = {
         val linesWithHeader = Bar.csvHeader +: bars.map(_.toString)

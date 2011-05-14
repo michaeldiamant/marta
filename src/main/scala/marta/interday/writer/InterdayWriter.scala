@@ -5,7 +5,7 @@ import marta.interday.model.Bar
 /**
  * Abstract class for writing Bars to an implementation-specific data source.
  */
-abstract class AbstractInterdayWriter {
+abstract class InterdayWriter {
 
     /**
      * Writes the provided Bars to the data source.

@@ -18,6 +18,12 @@ class Bar(
     ) {
     
     require(!symbol.isEmpty)
+    require(null != date)
+    require(volume >= 0)
+    require(open >= 0)
+    require(close >= 0)
+    require(low <= open && low <= high && low <= close)
+    require(high >= open && high >= low && high >= close)
     
     private val delimiter = ","
     
@@ -36,6 +42,7 @@ object Bar {
      */
     def apply(line: String): Bar = {
         val lineArray = line.split(DELIMITER)
+        
         new Bar(lineArray(0), 
                 new DateTime(lineArray(1)),
                 BigDecimal(lineArray(2)), 

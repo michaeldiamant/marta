@@ -8,3 +8,4 @@ target/
 .scala_dependencies
 *.scssc
 *.idea/
+*.history

@@ -7,3 +7,5 @@ target/
 *.iws
 .scala_dependencies
 *.scssc
+*.idea/
+*.history

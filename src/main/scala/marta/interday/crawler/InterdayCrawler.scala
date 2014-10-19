@@ -43,7 +43,7 @@ abstract class InterdayCrawler(
     /**
      * Crawls a market data provider's interday data.
      * 
-     * @returns list of bars representing the crawled OHLCV data 
+     * @return list of bars representing the crawled OHLCV data
      */
     final def crawl(): List[Bar] = {
         val linesToDrop = providesHeader match { case true => 1; case _ => 0 }
@@ -56,7 +56,7 @@ abstract class InterdayCrawler(
             processedLine
         })
         
-        val sortedLines = processedLines.sort((line1, line2) => {
+        val sortedLines = processedLines.sortWith((line1, line2) => {
             def toDateTime(line: String) = new DateTime(line.split(delimiter)(dateIndex))
             toDateTime(line1).isBefore(toDateTime(line2))
         })

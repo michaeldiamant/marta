@@ -51,7 +51,7 @@ object YahooInterdayCrawler {
             lineArray.update(index, (ohlc(index - 1) / adjustFactor).setScale(2, RoundingMode.UP).toString)    
         }
             
-        def stripAdjustedClose(arr: Array[String]) = arr.elements.take(arr.size - 1)
+        def stripAdjustedClose(arr: Array[String]) = arr.take(arr.size - 1)
         
         stripAdjustedClose(lineArray) mkString delimiter
     }
